@@ -1,6 +1,6 @@
 from pathlib import Path
 
-# puzzle_input = Path("test.txt")
+# puzzle_input = Path("test.txt ")
 puzzle_input = Path("input.txt")
 
 def translate_move(letter_input: str):
@@ -16,6 +16,20 @@ def translate_move(letter_input: str):
         print("This is not a valid letter")
     print('translated ' f"{move=}")
     return move
+
+def translate_outcome(letter_input: str):
+    letter = letter_input.lower()
+    print(f"{letter=}")
+    if (letter == "x"):
+        outcome = "lose"
+    elif (letter == "y"):
+        outcome = "draw"
+    elif (letter == "z"):
+        outcome = "win" 
+    else:
+        print("Invalid: This is not a valid letter")
+    print('translated ' f"{outcome=}")
+    return outcome
 
 def calculate_outcome(opponent, you):
     if opponent == you:
@@ -61,7 +75,29 @@ def calculate_points(outcome, choice):
 
 # print(calculate_points("win", "rock)"))
 
+def calculate_choice(opponent, you):
+    print('input 'f"{opponent=}")
+    print('desired outcome 'f"{you=}")
+    if you == "draw":
+        choice = opponent
+    elif (you == "win") and (opponent == "scissors"):
+        choice = "rock"
+    elif (you == "win") and (opponent == "paper"):
+        choice = "scissors"
+    elif (you == "win") and (opponent == "rock"):
+        choice = "paper"
+    elif (you == "lose") and (opponent == "scissors"):
+        choice = "paper"
+    elif (you == "lose") and (opponent == "paper"):
+        choice = "rock"
+    elif (you == "lose") and (opponent == "rock"):
+        choice = "scissors"
+    else:
+        print("Invalid input")
+    print('calculated ' f"{choice=}")
+    return choice
 
+# print(calculate_choice("paper", "lose"))
 
 total_points = 0
 with open(puzzle_input, "r") as f:
@@ -69,8 +105,8 @@ with open(puzzle_input, "r") as f:
     print(lines)
     for line in lines:
         opponent = translate_move(line[0])
-        you = translate_move(line[2])
         print(f"{opponent=}")
+        you = calculate_choice(opponent, translate_outcome(line[2]))
         print(f"{you=}")
         total_points += calculate_points(calculate_outcome(opponent, you), you)
         print(f"{total_points=}")
