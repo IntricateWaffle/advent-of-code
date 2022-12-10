@@ -1,8 +1,8 @@
 from pathlib import Path
 import string
 
-puzzle_input = Path("test.txt ")
-# puzzle_input = Path("input.txt")
+# puzzle_input = Path("test.txt ")
+puzzle_input = Path("input.txt")
 
 
 def get_item_type_priority(item_type_letter):
@@ -39,24 +39,17 @@ def get_groups(sacks, group_size):
 
 def get_group_assignment(group):
     print('input 'f"{group=}")
-    for sack in group:
-        if sack is group[-1]:
-            break
-        for item_type in sack:
-            if item_type in sack and sack:
-                print("WWWWWWWWWWWWWWWWOWOWOWOWOWOWOWOWOWOWO")
-    group_assignment = 0
+    for sack in group[0]:
+        print(f"{sack=}")
+        for item in sack:
+            print(f"{item=}")
+            if item in group[1] and item in group[2]:
+                print('item is in all sacks: 'f"{item=}")
+                group_assignment = item
     print(f"{group_assignment=}")
     return group_assignment
 
-
-with open(puzzle_input, "r") as f:
-    sacks = [line.rstrip() for line in f]
-    print(f"{sacks=}")
-    groups = get_groups(sacks, 3)
-    print(f"{groups=}")
-    get_group_assignment(groups)
-    import sys;exit()
+def part1(sacks):
     sack_priorities = list() 
     for sack in sacks:
         print(f"{sack=}")
@@ -78,3 +71,27 @@ with open(puzzle_input, "r") as f:
     total_priorities = sum(sack_priorities)
     print(f"{total_priorities=}")
     pass
+
+def part2(sacks):
+    groups = get_groups(sacks, 3)
+    print(f"{groups=}")
+    assignments = list()
+    priorities = list()
+    for group in groups:
+       assignments.append(get_group_assignment(group))
+    print(f"{assignments=}")
+    for assignment in assignments:
+        priorities.append(get_item_type_priority(assignment))
+    total_priorties = sum(priorities)
+    print(f"{total_priorties=}")
+    return total_priorties
+
+def main():
+    with open(puzzle_input, "r") as f:
+        sacks = [line.rstrip() for line in f]
+        print(f"{sacks=}")
+        part1(sacks)
+        part2(sacks)
+
+main()
+
