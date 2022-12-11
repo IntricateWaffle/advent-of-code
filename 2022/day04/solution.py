@@ -17,7 +17,7 @@ def get_split_assignmet(assignments_input):
     print(f"{split_assignments=}")
     return split_assignments
 
-def get_assignment_overlap(assignment1: list, assignment2: list):
+def get_full_assignment_overlap(assignment1: list, assignment2: list):
     set1 = set(assignment1)
     set2 = set(assignment2)
     assignment_overlap = set1 & set2
@@ -29,6 +29,17 @@ def get_assignment_overlap(assignment1: list, assignment2: list):
     print(f"{full_overlap=}")
     return full_overlap
 
+def get_any_assignment_overlap(assignment1: list, assignment2: list):
+    set1 = set(assignment1)
+    set2 = set(assignment2)
+    assignment_overlap = set1 & set2
+    print(f"{assignment_overlap=}")
+    if assignment_overlap != set():
+        overlap = True
+    else:
+        overlap = False
+    print(f"{overlap=}")
+    return overlap
 
 def part1(input_lines):
     full_overlaps = 0
@@ -37,11 +48,25 @@ def part1(input_lines):
         split_assignment = get_split_assignmet(line)
         for assignment in split_assignment:
             ranges.append(get_assignment_range(assignment))
-        if get_assignment_overlap(ranges[0], ranges[1]) == True:
+        if get_full_assignment_overlap(ranges[0], ranges[1]) == True:
             full_overlaps += 1
             print(f"{full_overlaps=}")
     print("part1")
     print(f"{full_overlaps=}")
+    return
+
+def part2(input_lines):
+    overlaps = 0
+    for line in input_lines:
+        ranges = list()
+        split_assignment = get_split_assignmet(line)
+        for assignment in split_assignment:
+            ranges.append(get_assignment_range(assignment))
+        if get_any_assignment_overlap(ranges[0], ranges[1]) == True:
+            overlaps += 1
+            print(f"{overlaps=}")
+    print("part2")
+    print(f"{overlaps=}")
     return
 
 def main():
@@ -49,6 +74,7 @@ def main():
         lines = [line.rstrip() for line in f]
         print(f"{lines=}")
     part1(lines)
+    part2(lines)
 
 
 main()
