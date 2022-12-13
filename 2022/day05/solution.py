@@ -9,24 +9,24 @@ def get_crates(input_lines):
     crates_dict = {}
     for line in input_lines:
         print(f"{line=}")
+        print(f"{len(line)=}")
+        crates.append(line)
         if "1" in line:
-            print("stack numbers: "f'{line=}')
-            print(input_lines.index(line))
             for num in line:
                 if num.isdigit() == True:
                     crates_dict[num] = list()
                     print(f"{crates_dict=}")
-                break
-        else:
-            crates.append(line)
-        for row in crates:
-            print(f"{row=}")
-            for crate in row:
-                print(f"{crate=}")
+            crates.remove(line)
+            break
+        for i in range(1, len(crates), 4):
+            print(f"{crates[i]=}")
+
         if line == '':
             print("blank")
             break
         print(f"{crates=}")
+    print(f"{crates_dict.keys()=}")
+
     return
 
 def get_planned_steps():
